@@ -13,7 +13,7 @@ namespace MyVaultKeep
 
             //DISCLAIMER:
             //This program is only meant to log the progress of your savings account any changes to the amount of cash is not reflected to your actual bank account...
-            //ESTIMATED FUNCTIONS: Deposit & Withdraw Savings, Allocate Savings to a Goal, Track Spendings/Transactions, Data Storage (TO BE FURTHER ADDED)
+            //ESTIMATED FUNTIONS: Deposit & Withdraw Savings, Allocate Savings to a Goal, Track Spendings/Transactions, Data Storage (TO BE FURTHER ADDED)
 
             Console.WriteLine("Welcome to MyVault Keep");
 
@@ -160,6 +160,7 @@ namespace MyVaultKeep
                 {
                     Console.WriteLine(transactions);
                 }
+                
                 Console.WriteLine("----------------------------");
             }
 
@@ -177,6 +178,7 @@ namespace MyVaultKeep
                     bal -= amountAllotment;
                     Console.WriteLine("You have successfully set an allotment named " + nameAllotment + " for an amount of: " + "PHP " + amountAllotment);
                     allotmentList.Add(nameAllotment + ":" + amountAllotment);
+                    transactionList.Add("Allotment of: PHP " + amountAllotment);
                 }
                 else if (amountAllotment > bal)
                 {
@@ -192,8 +194,6 @@ namespace MyVaultKeep
                 }
                 Console.WriteLine("----------------------------");
 
-                
-                transactionList.Add("Allotment of: PHP " + amountAllotment);
             }
 
 
