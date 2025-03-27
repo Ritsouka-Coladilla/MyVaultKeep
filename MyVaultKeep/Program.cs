@@ -5,7 +5,7 @@ namespace MyVaultKeep
 {
     internal class Program
     {
-        static string[] transaction = new string[] { "[1] Deposit", "[2] Withdraw", "[3] Create Savings", "[4] Transaction History", "[5] Allotment", "[6] View Allotment", "[7] Exit" };
+        static string[] transaction = new string[] { "[1] Deposit", "[2] Withdraw", "[3] Create Savings", "[4] Transaction History", "[5] Expenses", "[6] View Savings Account", "[7] Exit" };
         
         
         static void Main(string[] args)
@@ -156,9 +156,7 @@ namespace MyVaultKeep
 
             } 
 
-                        Console.WriteLine("Set desired amount for Allotment:");
-                        double amountAllotment = Convert.ToDouble(Console.ReadLine());
-
+               
                 static void viewSavingsAccount() //UI LOGIC
             {
                     Console.WriteLine("Savings Accounts: ");
