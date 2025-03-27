@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Functions_BusinessDataLogic;
 
 namespace MyVaultKeep
@@ -156,6 +156,8 @@ namespace MyVaultKeep
 
             } 
 
+                        Console.WriteLine("Set desired amount for Allotment:");
+                        double amountAllotment = Convert.ToDouble(Console.ReadLine());
 
                 static void viewSavingsAccount() //UI LOGIC
             {
