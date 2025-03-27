@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35825.156 d17.13
+VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyVaultKeep", "MyVaultKeep\MyVaultKeep.csproj", "{F90D3FC9-34D7-400F-9F2C-4AE76058E0B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functions_BusinessDataLogic", "Functions\Functions_BusinessDataLogic.csproj", "{51DC888F-E5C2-4C56-9BA9-C8C8C9AD76F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F90D3FC9-34D7-400F-9F2C-4AE76058E0B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F90D3FC9-34D7-400F-9F2C-4AE76058E0B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F90D3FC9-34D7-400F-9F2C-4AE76058E0B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51DC888F-E5C2-4C56-9BA9-C8C8C9AD76F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51DC888F-E5C2-4C56-9BA9-C8C8C9AD76F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51DC888F-E5C2-4C56-9BA9-C8C8C9AD76F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51DC888F-E5C2-4C56-9BA9-C8C8C9AD76F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

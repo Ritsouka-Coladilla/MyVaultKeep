@@ -1,108 +1,180 @@
-﻿namespace MyVaultKeep
+﻿using System;
+using Functions_BusinessDataLogic;
+
+namespace MyVaultKeep
 {
     internal class Program
     {
+        static string[] transaction = new string[] { "[1] Deposit", "[2] Withdraw", "[3] Create Savings", "[4] Transaction History", "[5] Allotment", "[6] View Allotment", "[7] Exit" };
+        
+        
         static void Main(string[] args)
         {
 
             //DISCLAIMER:
             //This program is only meant to log the progress of your savings account any changes to the amount of cash is not reflected to your actual bank account...
-            //ESTIMATED FUNTIONS: Deposit & Withdraw Savings, Allocate Savings to a Goal, Track Spendings/Transactions, Data Storage (TO BE FURTHER ADDED)
+            //ESTIMATED FUNTIONS: Deposit & Withdraw Savings, Create, and Allocate Savings, Track Spendings/Transactions, Data Storage (TO BE FURTHER ADDED)
 
             Console.WriteLine("Welcome to MyVault Keep");
 
-            double bal = 0;
-            double rent = 0;
-            double miscl = 0;
-            string confirm;
+            initialDeposit();
+            displayCurrentBalance();
+            displayTransactions();
 
-            do
+            int enterAction = getEnterAction();
 
+            while (enterAction != 7)
             {
-                Console.WriteLine("Current Balance: " + bal);
-                Console.WriteLine("Please select a transaction!");
-
-                string[] transaction = new string[] { "[1] Deposit", "[2] Withdraw", "[3] Set Goals", "[4] Transaction History", "[5] Allotment", "[6] Exit" };
-
-                foreach (var trans in transaction)
-                {
-                    Console.WriteLine(trans);
-                }
-                Console.WriteLine("Enter Transaction");
-
-                int enterAction = Convert.ToInt16(Console.ReadLine());
-
                 switch (enterAction)
                 {
                     case 1:
-                        Console.WriteLine("Enter amount to deposit:");
-                        double deposit = Convert.ToDouble(Console.ReadLine());
-
-                        bal += deposit;
-
-                        Console.WriteLine("Your balance is: " + "PHP " + bal);
+                        addDeposit();
                         break;
                     case 2:
-                        Console.WriteLine("Enter amount to be withdrawn:");
-                        double withdraw = Convert.ToDouble(Console.ReadLine());
-
-                        if (withdraw >= 0)
-                        {
-                            bal -= withdraw;
-
-                            Console.WriteLine("You have successfully withdrawn: " + "PHP " + withdraw);
-                        }
-                        else if (withdraw < 0)
-                        {
-                            Console.WriteLine("Please enter a positive value or 0");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Invalid Input");
-                        }
+                        withdrawDebit();
                         break;
                     case 3:
-                        Console.WriteLine("Please Add a Saving Goal:");
-                        double sGoal = Convert.ToDouble(Console.ReadLine());
-
-                        double eGoal = sGoal - bal;
-
-                        Console.WriteLine("You have set a goal of: " + "PHP " + sGoal + " to reach.");
-
-                        if (bal < sGoal)
-                        {
-                            Console.WriteLine("You are " + "PHP " + eGoal + " short to reach your goal.");
-                        }
-                        else if (bal > sGoal)
-                        {
-                            Console.WriteLine("You have already succeeded your goal.");
-                        }
-
+                        createSavings();
                         break;
                     case 4:
-                        Console.WriteLine("To be Added...");
+                        transactionHistory();
                         break;
                     case 5:
-                        Console.WriteLine("Set name for Allotment:");
-                        string nameAllotment = Console.ReadLine();
-
-                        Console.WriteLine("Set desired amount for Allotment:");
-                        double amountAllotment = Convert.ToDouble(Console.ReadLine());
-
-                        Console.WriteLine("You have successfully set an allotment named " + nameAllotment + " for an amount of: " + "PHP " + amountAllotment);
+                        setExpenses();
                         break;
                     case 6:
-                        Console.WriteLine("Goodbye!");
+                        viewSavingsAccount();
+                        break;
+                    case 7:
+                        Console.WriteLine("Thank you for MyVault!");
                         break;
                     default:
-                        Console.WriteLine("Invalid Input");
+                        Console.WriteLine("Invalid Input, please select a value ranging from 1-7");
                         break;
-                }
-                Console.WriteLine("Do you Wish to start another Transaction? Types 'Yes' to continue or 'No' to exit.");
-                confirm = Console.ReadLine();
 
-            } while (confirm == "yes" || confirm == "Yes");
+                }
+                displayCurrentBalance();
+                displayTransactions();
+                enterAction = getEnterAction();
+
+            }
+            static int getEnterAction()
+            {
+                Console.Write("[User Input]: ");
+                int enterAction = Convert.ToInt32(Console.ReadLine());
+                
+                return enterAction;
+            }
+
+
+            static void displayCurrentBalance()//UI LOGIC
+            {
+                Console.WriteLine("Current Balance: PHP " + DepositAndWithdrawal.bal);
+                Console.WriteLine("----------------------------");
+            }
+
+
+            static void initialDeposit() //UI LOGIC
+            {
+                Console.Write("[Enter your debit amount]: ");
+                DepositAndWithdrawal.bal = Convert.ToDouble(Console.ReadLine());
+                Console.WriteLine("----------------------------");
+
+            }
+
+
+            static void displayTransactions() //UI LOGIC
+            {
+                
+                Console.WriteLine("Please select a transaction!");
+                Console.WriteLine("Enter Transaction:");
+                foreach (var trans in transaction)
+                {
+                    Console.WriteLine(trans);
+
+                }
+            }
+
+
+                static void addDeposit() //UI LOGIC
+            {
+                    Console.Write("Enter amount to deposit: ");
+                    double deposit = Convert.ToDouble(getEnterAction());
+                    DepositAndWithdrawal.VaultProcess(TransactionActions.Deposit, deposit);
+
+                Console.WriteLine("----------------------------");
+
+                }
+
+                static void withdrawDebit() //UI LOGIC
+            {
+                    Console.WriteLine("----------------------------");
+                    Console.Write("Enter amount to be withdrawn: ");
+                    double withdraw = Convert.ToDouble(getEnterAction());
+                    
+                    if(!DepositAndWithdrawal.VaultProcess(TransactionActions.Withdraw, withdraw))
+                {
+                    Console.WriteLine("Insufficient Balance");
+                   
+                }
+
+                displayCurrentBalance();
+          
+                }
+
+                static void createSavings() //UI LOGIC
+            {
+
+            }
+
+            static void transactionHistory() //UI LOGIC
+                {
+                    Console.WriteLine("Transaction History:");
+                    Console.WriteLine("____________________________");
+                    foreach (var Viewtransactions in DepositAndWithdrawal.transactionList)
+                    {
+                    Console.WriteLine(Viewtransactions);
+                    }
+                    Console.WriteLine("----------------------------");
+                }
+
+                static void setExpenses() //UI LOGIC
+                {
+                    Console.WriteLine("Set Expenses Name: ");
+                    ExpensesProcess.setExpensesName();
+
+                    Console.WriteLine("Enter amount to allot: ");
+                    double allotmentValue = Convert.ToDouble(getEnterAction());
+
+                    if (!ExpensesProcess.initializeExpenses(TransactionActions.Allotment, allotmentValue))
+                {
+                    Console.WriteLine("Insufficient Balance");
+
+                }
+
+                Console.WriteLine("----------------------------");
+
+            } 
+
+
+                static void viewSavingsAccount() //UI LOGIC
+            {
+                    Console.WriteLine("Savings Accounts: ");
+                    Console.WriteLine("____________________________");
+                    foreach (string savings in SavingsProcess.savingsList)
+                    {
+                        Console.WriteLine(savings);
+                    }
+                    Console.WriteLine("----------------------------");
+                }
+
+
+            }
 
         }
     }
-}
+
+
+
+
+
