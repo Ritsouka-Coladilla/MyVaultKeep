@@ -5,7 +5,7 @@ namespace MyVaultKeep
 {
     internal class Program
     {
-        static string[] transaction = new string[] { "[1] Deposit", "[2] Withdraw", "[3] Create Savings", "[4] Transaction History", "[5] Expenses", "[6] View Savings Account", "[7] Exit" };
+        static string[] transaction = new string[] { "[1] Deposit", "[2] Withdraw", "[3] Create Savings", "[4] Transaction History", "[5] Expenses", "[6] View Savings Account,", "[7] Exit" };
         
         
         static void Main(string[] args)
@@ -144,9 +144,9 @@ namespace MyVaultKeep
                     ExpensesProcess.setExpensesName();
 
                     Console.WriteLine("Enter amount to allot: ");
-                    double allotmentValue = Convert.ToDouble(getEnterAction());
+                    double expensesValue = Convert.ToDouble(getEnterAction());
 
-                    if (!ExpensesProcess.initializeExpenses(TransactionActions.Allotment, allotmentValue))
+                    if (!ExpensesProcess.initializeExpenses(TransactionActions.Expenses, expensesValue))
                 {
                     Console.WriteLine("Insufficient Balance");
 

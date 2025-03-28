@@ -10,6 +10,7 @@ namespace Functions_BusinessDataLogic
     {
         Deposit,
         Withdraw,
-        Allotment
+        Expenses,
+        Savings
     }
 }

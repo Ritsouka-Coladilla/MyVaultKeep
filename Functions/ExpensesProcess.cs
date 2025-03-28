@@ -14,7 +14,7 @@ namespace Functions_BusinessDataLogic
         {
             
 
-            if (userInput == TransactionActions.Allotment && amountExpenses <= DepositAndWithdrawal.bal)
+            if (userInput == TransactionActions.Expenses && amountExpenses <= DepositAndWithdrawal.bal)
             {
                 DepositAndWithdrawal.bal -= amountExpenses;
                 DepositAndWithdrawal.transactionList.Add(nameExpenses + " PHP " + amountExpenses);
