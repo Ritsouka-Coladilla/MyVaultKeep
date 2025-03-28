@@ -16,7 +16,7 @@ namespace Functions_BusinessDataLogic
             if (userInput ==  TransactionActions.Withdraw && enteredAmount <= bal) //WITHDRAW
             {
                 bal -= enteredAmount;
-                transactionList.Add("Withdrawn:" + enteredAmount);
+                transactionList.Add("Withdrawn: PHP " + enteredAmount);
                 return true;
                
             }
@@ -24,7 +24,7 @@ namespace Functions_BusinessDataLogic
             if (userInput == TransactionActions.Deposit) //DEPOSIT
             {
                 bal += enteredAmount;
-                transactionList.Add("Deposit:" + enteredAmount);
+                transactionList.Add("Deposit: PHP " + enteredAmount);
                 return true;
             }
             return false;
