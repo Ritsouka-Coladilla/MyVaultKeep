@@ -11,20 +11,26 @@ namespace Functions_BusinessDataLogic
         
         public static List<string> savingsList = new List<string>();
         public static double savingsBal = 0;
-        public static string nameSavings;
+        static string givenName;
+        
         public static bool createSavings(TransactionActions userInput, double amountSavings)
         {
             if (userInput == TransactionActions.Savings && amountSavings <= DepositAndWithdrawal.bal)
             {
-                savingsList.Add(nameSavings + " PHP: " + amountSavings);
+                savingsList.Add( givenName + " PHP: " + amountSavings);
                 DepositAndWithdrawal.bal -= amountSavings;
                 return true;
             }
             return false;
         }
-        public static void setSavingsName()
+        public static void setSavingsName(string namedAccount)
         {
-            nameSavings = Console.ReadLine();
+            givenName = namedAccount;
+           
+        }
+        public static string getSavingsName()
+        {
+            return givenName;
         }
     }
 }

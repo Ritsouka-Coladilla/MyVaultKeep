@@ -137,7 +137,9 @@ namespace MyVaultKeep
                 static void createSavings() //UI LOGIC -METHOD FOR CREATING SAVINGS-
             {
                 Console.WriteLine("Enter Savings Name: ");
-                SavingsProcess.setSavingsName();
+                string savingsName = Console.ReadLine();
+
+                SavingsProcess.setSavingsName(savingsName);
 
                 Console.WriteLine("Enter amount to transfer: ");
                 double savingsValue = Convert.ToDouble(getEnterAction());
