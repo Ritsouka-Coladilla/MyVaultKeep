@@ -1,5 +1,6 @@
 using System;
-using Functions_BusinessDataLogic;
+using Functions_BusinessLogic;
+using Functions_DataLogic;
 
 namespace MyVaultKeep
 {
@@ -69,7 +70,7 @@ namespace MyVaultKeep
 
             static void displayCurrentBalance()//UI LOGIC -DISPLAYS CURRENT BALANCE-
             {
-                Console.WriteLine("Current Balance: PHP " + DepositAndWithdrawal.bal);
+                Console.WriteLine("Current Balance: PHP " + MyVaultData.Balance);
                 Console.WriteLine("----------------------------");
             }
 
@@ -77,7 +78,7 @@ namespace MyVaultKeep
             static void initialDeposit() //UI LOGIC -CREATES INITIAL DEPOSIT-
             {
                 Console.Write("[Enter your debit amount]: ");
-                DepositAndWithdrawal.bal = Convert.ToDouble(Console.ReadLine());
+                MyVaultData.Balance = Convert.ToDouble(Console.ReadLine());
                 Console.WriteLine("----------------------------");
 
             }
@@ -139,7 +140,7 @@ namespace MyVaultKeep
                 Console.WriteLine("Enter Savings Name: ");
                 string savingsName = Console.ReadLine();
 
-                SavingsProcess.setSavingsName(savingsName);
+                MyVaultData.SetName(savingsName);
 
                 Console.WriteLine("Enter amount to transfer: ");
                 double savingsValue = Convert.ToDouble(getEnterAction());
@@ -155,7 +156,7 @@ namespace MyVaultKeep
             {
                     Console.WriteLine("Transaction History:");
                     Console.WriteLine("____________________________");
-                    foreach (var Viewtransactions in DepositAndWithdrawal.transactionList)
+                    foreach (var Viewtransactions in MyVaultData.GetTransactionList())
                     {
                     Console.WriteLine(Viewtransactions);
                     }
@@ -165,7 +166,7 @@ namespace MyVaultKeep
                 static void setExpenses() //UI LOGIC -METHOD FOR SETTING EXPENSES-
             {
                     displayExpenses();
-                    ExpensesProcess.enterExpenses = Convert.ToInt16(getEnterAction());
+                    MyVaultData.EnterExpenses = Convert.ToInt16(getEnterAction());
 
                     Console.WriteLine("Enter amount to allot: ");
                     double expensesValue = Convert.ToDouble(getEnterAction());
@@ -185,7 +186,7 @@ namespace MyVaultKeep
             {
                     Console.WriteLine("Savings Accounts: ");
                     Console.WriteLine("____________________________");
-                    foreach (string savings in SavingsProcess.savingsList)
+                    foreach (string savings in MyVaultData.GetSavingsList())
                     {
                         Console.WriteLine(savings);
                     }

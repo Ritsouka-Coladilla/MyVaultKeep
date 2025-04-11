@@ -1,36 +1,26 @@
-﻿using System;
+﻿using Functions_DataLogic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Functions_BusinessDataLogic
+namespace Functions_BusinessLogic
 {
     public class SavingsProcess
     {
-        
-        public static List<string> savingsList = new List<string>();
-        public static double savingsBal = 0;
-        static string givenName;
-        
+         
         public static bool createSavings(TransactionActions userInput, double amountSavings)
         {
-            if (userInput == TransactionActions.Savings && amountSavings <= DepositAndWithdrawal.bal)
+            if (userInput == TransactionActions.Savings && amountSavings <= MyVaultData.Balance)
             {
-                savingsList.Add( givenName + " PHP: " + amountSavings);
-                DepositAndWithdrawal.bal -= amountSavings;
+                MyVaultData.SetSavings(MyVaultData.Name + " PHP: " + amountSavings);
+                MyVaultData.Balance -= amountSavings;
                 return true;
             }
             return false;
         }
-        public static void setSavingsName(string namedAccount)
-        {
-            givenName = namedAccount;
-           
-        }
-        public static string getSavingsName()
-        {
-            return givenName;
+        
         }
     }
-}
+

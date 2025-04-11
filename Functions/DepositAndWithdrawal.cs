@@ -1,30 +1,32 @@
-﻿using System;
+﻿using Functions_DataLogic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 
-namespace Functions_BusinessDataLogic
+namespace Functions_BusinessLogic
 {
     public class DepositAndWithdrawal
     {
-        public static double bal = 0;
-        public static List<string> transactionList = new List<string>();
+        
+        
         public static bool VaultProcess(TransactionActions userInput, double enteredAmount)
         {
-            if (userInput ==  TransactionActions.Withdraw && enteredAmount <= bal) //WITHDRAW
+            if (userInput ==  TransactionActions.Withdraw && enteredAmount <= MyVaultData.Balance && enteredAmount > 0) //WITHDRAW
+
             {
-                bal -= enteredAmount;
-                transactionList.Add("Withdrawn: PHP " + enteredAmount);
+                MyVaultData.Balance -= enteredAmount;
+                MyVaultData.SetTransaction($"Withdrawn: PHP { enteredAmount}");
                 return true;
                
             }
 
             if (userInput == TransactionActions.Deposit) //DEPOSIT
             {
-                bal += enteredAmount;
-                transactionList.Add("Deposit: PHP " + enteredAmount);
+                MyVaultData.Balance += enteredAmount;
+                MyVaultData.SetTransaction($"Deposit: PHP {enteredAmount}");
                 return true;
             }
             return false;
