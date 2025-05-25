@@ -1,0 +1,6 @@
+Deposit: PHP 100
+Withdrawn: PHP 670
+Rent: PHP 5000
+Savings: Badminton Racket PHP: 500
+Deposit: PHP 600
+Savings: ML Skin PHP: 1500
