@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyVaultCommon;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +9,6 @@ namespace Functions_DataLogic
 {
     public static class MyVaultData
     {
-        public static double Balance { get; set; } = 0;
-
-        public static double SavingsBal { get; set; } = 0;
-        public static string Name { get; set; }
-        public static int EnterExpenses { get; set; }
 
         private static List<String> transactionList = new List<String>();
 
@@ -31,7 +27,7 @@ namespace Functions_DataLogic
 
         public static void SetName(string _name)
         {
-             Name = _name;
+             MyVaultDetails.Name = _name;
         }
 
         public static void SetSavings(string _savings)

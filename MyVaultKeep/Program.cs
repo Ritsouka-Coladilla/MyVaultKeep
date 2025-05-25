@@ -1,6 +1,7 @@
 using System;
 using Functions_BusinessLogic;
 using Functions_DataLogic;
+using MyVaultCommon;
 
 namespace MyVaultKeep
 {
@@ -70,7 +71,7 @@ namespace MyVaultKeep
 
             static void displayCurrentBalance()//UI LOGIC -DISPLAYS CURRENT BALANCE-
             {
-                Console.WriteLine("Current Balance: PHP " + MyVaultData.Balance);
+                Console.WriteLine("Current Balance: PHP " + MyVaultDetails.Balance);
                 Console.WriteLine("----------------------------");
             }
 
@@ -78,7 +79,7 @@ namespace MyVaultKeep
             static void initialDeposit() //UI LOGIC -CREATES INITIAL DEPOSIT-
             {
                 Console.Write("[Enter your debit amount]: ");
-                MyVaultData.Balance = Convert.ToDouble(Console.ReadLine());
+                MyVaultDetails.Balance = Convert.ToDouble(Console.ReadLine());
                 Console.WriteLine("----------------------------");
 
             }
@@ -166,7 +167,7 @@ namespace MyVaultKeep
                 static void setExpenses() //UI LOGIC -METHOD FOR SETTING EXPENSES-
             {
                     displayExpenses();
-                    MyVaultData.EnterExpenses = Convert.ToInt16(getEnterAction());
+                    MyVaultDetails.EnterExpenses = Convert.ToInt16(getEnterAction());
 
                     Console.WriteLine("Enter amount to allot: ");
                     double expensesValue = Convert.ToDouble(getEnterAction());

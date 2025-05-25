@@ -1,4 +1,5 @@
 ﻿using Functions_DataLogic;
+using MyVaultCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,44 +16,44 @@ namespace Functions_BusinessLogic
             
             if (userInput == TransactionActions.Expenses)
             {
-                switch (MyVaultData.EnterExpenses)
+                switch (MyVaultDetails.EnterExpenses)
                 {
                     case 1:
-                        if (amountExpenses <= MyVaultData.Balance)
+                        if (amountExpenses <= MyVaultDetails.Balance)
                         {
-                            MyVaultData.Balance -= amountExpenses;
+                            MyVaultDetails.Balance -= amountExpenses;
                             MyVaultData.SetTransaction("Food: PHP " + amountExpenses);
                             return true;
                         }
                         break;
                     case 2:
-                        if (amountExpenses <= MyVaultData.Balance)
+                        if (amountExpenses <= MyVaultDetails.Balance)
                         {
-                            MyVaultData.Balance -= amountExpenses;
+                            MyVaultDetails.Balance -= amountExpenses;
                             MyVaultData.SetTransaction("Transportation: PHP " + amountExpenses);
                             return true;
                         }
                         break;
                     case 3:
-                        if (amountExpenses <= MyVaultData.Balance)
+                        if (amountExpenses <= MyVaultDetails.Balance)
                         {
-                            MyVaultData.Balance -= amountExpenses;
+                            MyVaultDetails.Balance -= amountExpenses;
                             MyVaultData.SetTransaction("Utilities: PHP " + amountExpenses);
                             return true;
                         }
                         break;
                     case 4:
-                        if (amountExpenses <= MyVaultData.Balance)
+                        if (amountExpenses <= MyVaultDetails.Balance)
                         {
-                            MyVaultData.Balance -= amountExpenses;
+                            MyVaultDetails.Balance -= amountExpenses;
                             MyVaultData.SetTransaction("Rent: PHP " + amountExpenses);
                             return true;
                         }
                         break;
                     case 5:
-                        if (amountExpenses <= MyVaultData.Balance)
+                        if (amountExpenses <= MyVaultDetails.Balance)
                         {
-                            MyVaultData.Balance -= amountExpenses;
+                            MyVaultDetails.Balance -= amountExpenses;
                             MyVaultData.SetTransaction("Others: PHP " + amountExpenses);
                             return true;
                         }
