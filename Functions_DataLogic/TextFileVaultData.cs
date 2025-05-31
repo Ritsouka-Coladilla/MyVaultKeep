@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,27 +10,33 @@ namespace Functions_DataLogic
 {
     public static class TextFileVaultData
     {
-        private static readonly string transactionPath = "transaction.json"; // -CHANGE TO .txt IF NEEDED-
-        private static readonly string savingsPath = "savings.json"; // -CHANGE TO .txt IF NEEDED-
+        private static readonly string connectionString =
+            "Server=DESKTOP-P1UNBNT\\SQLEXPRESS;Database=MyVaultDB;Trusted_Connection=True;TrustServerCertificate=True;";
+        //private static readonly string transactionPath = "transaction.json"; // -Change the file type to .txt or .json if needed-
+        //private static readonly string savingsPath = "savings.json"; // -Change the file type to .txt or .json if needed-
 
         public static void SaveTransaction(string transaction)
         {
-            SaveItem(transactionPath, transaction);
+            SaveTransactionToDatabase(transaction);
+           // SaveItem(transactionPath, transaction);
         }
 
         public static List<string> LoadTransactions()
         {
-            return LoadItems(transactionPath);
+            return LoadTransactionsFromDatabase();
+            //return LoadItems(transactionPath);
         }
 
         public static void SaveSavings(string savings)
         {
-            SaveItem(savingsPath, savings);
+            SaveSavingsToDatabase(savings);
+            //SaveItem(savingsPath, savings);
         }
 
         public static List<string> LoadSavings()
         {
-            return LoadItems(savingsPath);
+            return LoadSavingsFromDatabase();
+            //return LoadItems(savingsPath);
         }
 
         private static void SaveItem(string path, string item)
@@ -75,7 +82,77 @@ namespace Functions_DataLogic
                 throw new NotSupportedException("Unsupported file extension: " + extension);
             }
         }
-    }
 
+        private static void SaveTransactionToDatabase(string transaction)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "INSERT INTO Transactions (Description, CreatedAt) VALUES (@Description, @CreatedAt)";
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Description", transaction);
+                    command.Parameters.AddWithValue("@CreatedAt", DateTime.Now);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private static List<string> LoadTransactionsFromDatabase()
+        {
+            var transactions = new List<string>();
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT Description FROM Transactions ORDER BY CreatedAt";
+                using (var command = new SqlCommand(query, connection))
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        transactions.Add(reader.GetString(0));
+                    }
+                }
+            }
+            return transactions;
+        }
+
+        private static void SaveSavingsToDatabase(string savings)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "INSERT INTO Savings (Description, CreatedAt) VALUES (@Description, @CreatedAt)";
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Description", savings);
+                    command.Parameters.AddWithValue("@CreatedAt", DateTime.Now);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private static List<string> LoadSavingsFromDatabase()
+        {
+            var savings = new List<string>();
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT Description FROM Savings ORDER BY CreatedAt";
+                using (var command = new SqlCommand(query, connection))
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        savings.Add(reader.GetString(0));
+                    }
+                }
+            }
+            return savings;
+        }
+    }
 }
+    
+
+
 
