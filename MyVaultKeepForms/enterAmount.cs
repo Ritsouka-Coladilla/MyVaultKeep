@@ -37,8 +37,7 @@ namespace MyVaultKeepForms
                 bool success = Functions_BusinessLogic.DepositAndWithdrawal.VaultProcess(
                      mode == TransactionActions.Deposit
                      ? Functions_BusinessLogic.TransactionActions.Deposit
-                     : Functions_BusinessLogic.TransactionActions.Withdraw, amount
- );
+                     : Functions_BusinessLogic.TransactionActions.Withdraw, amount);
 
                 if (success)
                 {

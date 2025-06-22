@@ -11,7 +11,7 @@ namespace Functions_DataLogic
     public static class TextFileVaultData
     {
         private static readonly string connectionString =
-            "Server=DESKTOP-P1UNBNT\\SQLEXPRESS;Database=MyVaultDB;Trusted_Connection=True;TrustServerCertificate=True;";
+            "Server=RITSOUKA\\SQLEXPRESS;Database=MyVaultDB;Trusted_Connection=True;TrustServerCertificate=True;";
         //private static readonly string transactionPath = "transaction.json"; // -Change the file type to .txt or .json if needed-
         //private static readonly string savingsPath = "savings.json"; // -Change the file type to .txt or .json if needed-
 
@@ -29,7 +29,7 @@ namespace Functions_DataLogic
 
         public static void SaveSavings(string savings)
         {
-            SaveSavingsToDatabase(savings);
+            SaveSavingsToDatabase(savings);    
             //SaveItem(savingsPath, savings);
         }
 

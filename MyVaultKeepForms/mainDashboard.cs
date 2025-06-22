@@ -63,11 +63,16 @@ namespace MyVaultKeepForms
 
         private void vwSavings_btn_Click(object sender, EventArgs e)
         {
-
+            var savingsForm = new View(View.ViewActions.Savings);
+            savingsForm.ShowDialog();
+            this.Hide();
         }
 
         private void trnsctHist_btn_Click(object sender, EventArgs e)
         {
+            var transactionForm = new View(View.ViewActions.Transactions);
+            transactionForm.ShowDialog();
+            this.Hide();
 
         }
     }
