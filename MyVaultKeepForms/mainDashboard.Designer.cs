@@ -109,6 +109,7 @@ namespace MyVaultKeepForms
             expenses_btn.TabIndex = 6;
             expenses_btn.Text = "Expenses";
             expenses_btn.UseVisualStyleBackColor = true;
+            expenses_btn.Click += expenses_btn_Click_1;
             // 
             // trnsctHist_btn
             // 

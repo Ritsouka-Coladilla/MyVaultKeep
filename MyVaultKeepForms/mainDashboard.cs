@@ -52,13 +52,11 @@ namespace MyVaultKeepForms
 
         }
 
-        private void expenses_btn_Click(object sender, EventArgs e)
-        {
-        }
-
         private void crtsavings_btn_Click(object sender, EventArgs e)
         {
-
+            savingsManipulation savingsForm = new savingsManipulation();
+            savingsForm.ShowDialog();
+            this.Hide();
         }
 
         private void vwSavings_btn_Click(object sender, EventArgs e)
@@ -74,6 +72,13 @@ namespace MyVaultKeepForms
             transactionForm.ShowDialog();
             this.Hide();
 
+        }
+
+        private void expenses_btn_Click_1(object sender, EventArgs e)
+        {
+            expenses expensesForm = new expenses();
+            expensesForm.ShowDialog();
+            this.Hide();
         }
     }
 }

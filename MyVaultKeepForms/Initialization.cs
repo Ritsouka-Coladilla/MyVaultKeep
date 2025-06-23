@@ -28,11 +28,10 @@ namespace MyVaultKeepForms
         {
             double deposit;
 
-            if (double.TryParse(deposit_txtbx.Text, out deposit) && deposit > 0)
+            if (double.TryParse(deposit_txtbx.Text, out deposit) && deposit >= 0)
             {
                 
                 MyVaultDetails.Balance = deposit;
-                MyVaultData.SetTransaction($"Initial Deposit: PHP {deposit}");
                 MessageBox.Show("Initial deposit set successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 
                 
