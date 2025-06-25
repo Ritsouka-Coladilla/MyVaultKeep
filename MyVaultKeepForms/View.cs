@@ -29,24 +29,43 @@ namespace MyVaultKeepForms
 
         private void View_Load(object sender, EventArgs e)
         {
+
             if (mode == ViewActions.Transactions)
             {
-                view_lbl.Text = "Transaction History";
                 view_lstbx.Items.AddRange(MyVaultData.GetTransactionList().ToArray());
             }
             else if (mode == ViewActions.Savings)
             {
-                view_lbl.Text = "Active Savings";
                 view_lstbx.Items.AddRange(MyVaultData.GetSavingsList().ToArray());
             }
         }
+
 
         private void back_btn_Click(object sender, EventArgs e)
         {
             mainDashboard dashboard = new mainDashboard();
             dashboard.Show();
             this.Hide();
-            
+
+        }
+
+        private void view_lstbx_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void View_Actived(object sender, EventArgs e)
+        {
+            view_lstbx.Items.Clear();
+
+            if (mode == ViewActions.Transactions)
+            {
+                view_lstbx.Items.AddRange(MyVaultData.GetTransactionList().ToArray());
+            }
+            else if (mode == ViewActions.Savings)
+            {
+                view_lstbx.Items.AddRange(MyVaultData.GetSavingsList().ToArray());
+            }
         }
     }
 }

@@ -150,6 +150,49 @@ namespace Functions_DataLogic
             }
             return savings;
         }
+
+        public static bool DeleteSavings(string name)
+        {
+            var savingsList = LoadSavings();
+            var updatedList = savingsList.Where(s => !s.StartsWith(name + " PHP:")).ToList();
+
+            if (savingsList.Count == updatedList.Count)
+                return false;
+
+            WriteSavings(updatedList);
+            return true;
+        }
+
+        public static bool UpdateSavings(string oldName, string newName, double newAmount)
+        {
+            var savingsList = LoadSavings();
+            bool found = false;
+
+            for (int i = 0; i < savingsList.Count; i++)
+            {
+                if (savingsList[i].StartsWith(oldName + " PHP:"))
+                {
+                    savingsList[i] = newName + " PHP: " + newAmount;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found)
+            {
+                WriteSavings(savingsList);
+            }
+
+            return found;
+        }
+
+        private static void WriteSavings(List<string> updatedList)
+        {
+           
+            string path = "savings.json"; 
+            File.WriteAllText(path, JsonSerializer.Serialize(updatedList, new JsonSerializerOptions { WriteIndented = true }));
+
+        }
     }
 }
     

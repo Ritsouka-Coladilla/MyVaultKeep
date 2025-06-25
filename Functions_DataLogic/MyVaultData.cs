@@ -21,6 +21,17 @@ namespace Functions_DataLogic
             return TextFileVaultData.LoadTransactions();
         }
 
+        public static bool DeleteSavings(string name)
+        {
+            return TextFileVaultData.DeleteSavings(name);
+        }
+
+        public static bool UpdateSavings(string oldName, string newName, double amount)
+        {
+            return TextFileVaultData.UpdateSavings(oldName, newName, amount);
+        }
+
+
         public static void SetName(string _name)
         {
             MyVaultDetails.Name = _name;

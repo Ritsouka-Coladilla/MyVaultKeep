@@ -11,7 +11,7 @@ namespace Functions_BusinessLogic
     public class ExpensesProcess
     {
        
-        public static bool initializeExpenses(TransactionActions userInput, double amountExpenses) //BUSINESS LOGIC
+        public static bool initializeExpenses(TransactionActions userInput, double amountExpenses) 
         {
             
             if (userInput == TransactionActions.Expenses)

@@ -15,7 +15,7 @@ namespace Functions_BusinessLogic
         
         public static bool VaultProcess(TransactionActions userInput, double enteredAmount)
         {
-            if (userInput ==  TransactionActions.Withdraw && enteredAmount <= MyVaultDetails.Balance && enteredAmount > 0) //WITHDRAW
+            if (userInput ==  TransactionActions.Withdraw && enteredAmount <= MyVaultDetails.Balance && enteredAmount > 0) 
 
             {
                 MyVaultDetails.Balance -= enteredAmount;
