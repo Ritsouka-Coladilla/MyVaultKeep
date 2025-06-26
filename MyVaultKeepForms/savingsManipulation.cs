@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyVaultCommon;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -31,10 +32,11 @@ namespace MyVaultKeepForms
 
         private void add_btn_Click(object sender, EventArgs e)
         {
-            if (double.TryParse(amount_txbx.Text, out double amount) && amount > 0)
-            {
-                string name = name_txbx.Text.Trim();
+            string name = name_txbx.Text.Trim();
 
+            if (double.TryParse(amount_txbx.Text, out double amount) && amount <= MyVaultDetails.Balance)
+            {
+                
                 if (string.IsNullOrWhiteSpace(name))
                 {
                     MessageBox.Show("Please enter a valid savings name.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -43,7 +45,7 @@ namespace MyVaultKeepForms
 
                 Functions_DataLogic.MyVaultData.SetName(name);
 
-                bool success = Functions_BusinessLogic.SavingsProcess.createSavings(Functions_BusinessLogic.TransactionActions.Savings,amount);
+                bool success = Functions_BusinessLogic.SavingsProcess.createSavings(Functions_BusinessLogic.TransactionActions.Savings, amount);
 
                 if (success)
                 {
@@ -53,35 +55,83 @@ namespace MyVaultKeepForms
                 }
                 else
                 {
-                    MessageBox.Show("Transaction failed. Insufficient balance.");
+                    MessageBox.Show("Transaction failed. Insufficient balance.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 }
+
+            }else if (amount > MyVaultDetails.Balance)
+            {
+                MessageBox.Show("Transaction failed. Insufficient balance.", "Insufficient Balance", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
+ }
 
         private void update_btn_Click(object sender, EventArgs e)
         {
-           if (double.TryParse(amount_txbx.Text, out double amount) && amount > 0)
+            string name = name_txbx.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(name))
             {
-                string name = name_txbx.Text.Trim();
-                if (string.IsNullOrWhiteSpace(name))
+                MessageBox.Show("Please enter a valid savings name.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!double.TryParse(amount_txbx.Text, out double amount) || amount <= 0)
+            {
+                MessageBox.Show("Please enter a valid, positive amount.", "Invalid Amount", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (amount > MyVaultDetails.Balance)
+            {
+                MessageBox.Show("Transaction failed. Insufficient balance.", "Insufficient Balance", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            List<string> savingsList = Functions_DataLogic.MyVaultData.GetSavingsList();
+            double existingAmount = 0;
+            bool found = false;
+
+            foreach (var entry in savingsList)
+            {
+                if (entry.StartsWith(name + " PHP:"))
                 {
-                    MessageBox.Show("Please enter a valid savings name.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                Functions_DataLogic.MyVaultData.SetName(name);
-                bool success = Functions_BusinessLogic.SavingsProcess.updateSavings(Functions_BusinessLogic.TransactionActions.Savings, name, name, amount);
-                if (success)
-                {
-                    MessageBox.Show($"Successfully updated '{name}' savings with {amount.ToString("C2")}.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    amount_txbx.Clear();
-                    name_txbx.Clear();
-                }
-                else
-                {
-                    MessageBox.Show("Transaction failed. Insufficient balance.");
+                    string[] parts = entry.Split("PHP: ");
+                    if (parts.Length == 2 && double.TryParse(parts[1], out double parsedAmount))
+                    {
+                        existingAmount = parsedAmount;
+                        found = true;
+                        break;
+                    }
                 }
             }
 
+            if (!found)
+            {
+                MessageBox.Show($"Savings with name '{name}' was not found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            double newTotal = existingAmount + amount;
+            Functions_DataLogic.MyVaultData.SetName(name);
+
+            bool success = Functions_BusinessLogic.SavingsProcess.updateSavings(
+                Functions_BusinessLogic.TransactionActions.Savings,
+                name,
+                name,
+                newTotal);
+
+            if (success)
+            {
+                MyVaultDetails.Balance -= amount; 
+                MessageBox.Show($"Successfully added {amount.ToString("C2")} to '{name}' savings. New Total: {newTotal.ToString("C2")}",
+                                "Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                amount_txbx.Clear();
+                name_txbx.Clear();
+            }
+            else
+            {
+                MessageBox.Show("Failed to update savings.", "Update Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void delete_btn_Click(object sender, EventArgs e)
@@ -128,6 +178,7 @@ namespace MyVaultKeepForms
                 else
                 {
                     MessageBox.Show("Savings not found or could not be deleted.", "Delete Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 }
             }
         }

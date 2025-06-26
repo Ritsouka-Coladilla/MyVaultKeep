@@ -54,9 +54,10 @@ namespace MyVaultKeepForms
 
         private void crtsavings_btn_Click(object sender, EventArgs e)
         {
+            this.Hide();
             savingsManipulation savingsForm = new savingsManipulation();
             savingsForm.ShowDialog();
-            this.Hide();
+           
         }
 
         private void vwSavings_btn_Click(object sender, EventArgs e)

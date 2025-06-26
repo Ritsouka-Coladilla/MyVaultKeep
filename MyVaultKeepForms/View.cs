@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Functions_DataLogic;
+using Functions_BusinessLogic;
+using MyVaultCommon;
 
 namespace MyVaultKeepForms
 {
@@ -25,19 +27,13 @@ namespace MyVaultKeepForms
         {
             InitializeComponent();
             mode = view;
+           
         }
 
         private void View_Load(object sender, EventArgs e)
         {
+            view_lbl.Text = mode == ViewActions.Transactions ? "Transaction History:" : "Savings:";
 
-            if (mode == ViewActions.Transactions)
-            {
-                view_lstbx.Items.AddRange(MyVaultData.GetTransactionList().ToArray());
-            }
-            else if (mode == ViewActions.Savings)
-            {
-                view_lstbx.Items.AddRange(MyVaultData.GetSavingsList().ToArray());
-            }
         }
 
 
@@ -54,7 +50,7 @@ namespace MyVaultKeepForms
 
         }
 
-        private void View_Actived(object sender, EventArgs e)
+        private void View_Activated(object sender, EventArgs e)
         {
             view_lstbx.Items.Clear();
 

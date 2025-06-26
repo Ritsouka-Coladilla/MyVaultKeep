@@ -78,7 +78,7 @@
             Margin = new Padding(3, 4, 3, 4);
             Name = "View";
             Text = "View";
-            Activated += View_Actived;
+            Activated += View_Activated;
             Load += View_Load;
             ResumeLayout(false);
             PerformLayout();

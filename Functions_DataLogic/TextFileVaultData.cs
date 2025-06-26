@@ -11,7 +11,7 @@ namespace Functions_DataLogic
     public static class TextFileVaultData
     {
         private static readonly string connectionString =
-            "Server=DESKTOP-P1UNBNT\\SQLEXPRESS;Database=MyVaultDB;Trusted_Connection=True;TrustServerCertificate=True;";
+            "Server=RITSOUKA\\SQLEXPRESS;Database=MyVaultDB;Trusted_Connection=True;TrustServerCertificate=True;";
         //private static readonly string transactionPath = "transaction.json"; // -Change the file type to .txt or .json if needed-
         //private static readonly string savingsPath = "savings.json"; // -Change the file type to .txt or .json if needed-
 
@@ -151,13 +151,46 @@ namespace Functions_DataLogic
             return savings;
         }
 
+        public static bool DeleteSavingsDB(string name)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "DELETE FROM Savings WHERE Description LIKE @Name + ' PHP:%'";
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Name", name);
+                    int affectedRows = command.ExecuteNonQuery();
+                    return affectedRows > 0;
+                }
+            }
+        }
+
+        public static bool UpdateSavingsDB(string oldName, string newName, double newAmount)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "UPDATE Savings SET Description = @NewDesc WHERE Description LIKE @OldName + ' PHP:%'";
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@NewDesc", newName + " PHP: " + newAmount);
+                    command.Parameters.AddWithValue("@OldName", oldName);
+                    int affectedRows = command.ExecuteNonQuery();
+                    return affectedRows > 0;
+                }
+            }
+        }
+
         public static bool DeleteSavings(string name)
         {
             var savingsList = LoadSavings();
             var updatedList = savingsList.Where(s => !s.StartsWith(name + " PHP:")).ToList();
 
             if (savingsList.Count == updatedList.Count)
+            {
                 return false;
+            }
 
             WriteSavings(updatedList);
             return true;

@@ -23,12 +23,12 @@ namespace Functions_DataLogic
 
         public static bool DeleteSavings(string name)
         {
-            return TextFileVaultData.DeleteSavings(name);
+            return TextFileVaultData.DeleteSavingsDB(name);
         }
 
         public static bool UpdateSavings(string oldName, string newName, double amount)
         {
-            return TextFileVaultData.UpdateSavings(oldName, newName, amount);
+            return TextFileVaultData.UpdateSavingsDB(oldName, newName, amount);
         }
 
 
