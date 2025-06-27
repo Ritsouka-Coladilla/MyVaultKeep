@@ -43,9 +43,7 @@ namespace MyVaultKeepForms
                     return;
                 }
 
-                Functions_DataLogic.MyVaultData.SetName(name);
-
-                bool success = Functions_BusinessLogic.SavingsProcess.createSavings(Functions_BusinessLogic.TransactionActions.Savings, amount);
+                bool success = Functions_BusinessLogic.SavingsProcess.createSavings(Functions_BusinessLogic.TransactionActions.Savings, name, amount);
 
                 if (success)
                 {
@@ -112,7 +110,6 @@ namespace MyVaultKeepForms
             }
 
             double newTotal = existingAmount + amount;
-            Functions_DataLogic.MyVaultData.SetName(name);
 
             bool success = Functions_BusinessLogic.SavingsProcess.updateSavings(
                 Functions_BusinessLogic.TransactionActions.Savings,
@@ -148,7 +145,6 @@ namespace MyVaultKeepForms
 
             if (confirm == DialogResult.Yes)
             {
-                Functions_DataLogic.MyVaultData.SetName(name);
 
                 List<string> savingsList = Functions_DataLogic.MyVaultData.GetSavingsList();
                 double amountToRestore = 0;

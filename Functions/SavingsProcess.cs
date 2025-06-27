@@ -11,13 +11,14 @@ namespace Functions_BusinessLogic
     public class SavingsProcess
     {
 
-        public static bool createSavings(TransactionActions userInput, double amountSavings)
+        public static bool createSavings(TransactionActions userInput, string name, double amountSavings)
         {
             if (userInput == TransactionActions.Savings && amountSavings <= MyVaultDetails.Balance)
             {
-                MyVaultData.SetSavings(MyVaultDetails.Name + " PHP: " + amountSavings);
+                string savingsEntry = $"{name} PHP: {amountSavings}";
+                MyVaultData.SetSavings(savingsEntry);
                 MyVaultDetails.Balance -= amountSavings;
-                MyVaultData.SetTransaction("Savings: " + MyVaultDetails.Name + " PHP: " + amountSavings);
+                MyVaultData.SetTransaction($"Savings: {savingsEntry}");
 
                 return true;
 

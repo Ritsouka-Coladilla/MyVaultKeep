@@ -64,7 +64,7 @@ namespace MyVaultKeep
             {
                 Console.Write("[User Input]: ");
                 int enterAction = Convert.ToInt32(Console.ReadLine());
-                
+
                 return enterAction;
             }
 
@@ -112,41 +112,39 @@ namespace MyVaultKeep
 
             static void addDeposit() //UI LOGIC -METHOD FOR DEPOSITING-
             {
-                    Console.Write("Enter amount to deposit: ");
-                    double deposit = Convert.ToDouble(getEnterAction());
-                    DepositAndWithdrawal.VaultProcess(TransactionActions.Deposit, deposit);
+                Console.Write("Enter amount to deposit: ");
+                double deposit = Convert.ToDouble(getEnterAction());
+                DepositAndWithdrawal.VaultProcess(TransactionActions.Deposit, deposit);
 
                 Console.WriteLine("----------------------------");
 
-                }
+            }
 
-                static void withdrawDebit() //UI LOGIC -METHOD FOR WITHDRAWING-
+            static void withdrawDebit() //UI LOGIC -METHOD FOR WITHDRAWING-
             {
-                    Console.WriteLine("----------------------------");
-                    Console.Write("Enter amount to be withdrawn: ");
-                    double withdraw = Convert.ToDouble(getEnterAction());
-                    
-                    if(!DepositAndWithdrawal.VaultProcess(TransactionActions.Withdraw, withdraw))
+                Console.WriteLine("----------------------------");
+                Console.Write("Enter amount to be withdrawn: ");
+                double withdraw = Convert.ToDouble(getEnterAction());
+
+                if (!DepositAndWithdrawal.VaultProcess(TransactionActions.Withdraw, withdraw))
                 {
                     Console.WriteLine("Insufficient Balance");
-                   
+
                 }
 
                 displayCurrentBalance();
-          
-                }
 
-                static void createSavings() //UI LOGIC -METHOD FOR CREATING SAVINGS-
+            }
+
+            static void createSavings() //UI LOGIC -METHOD FOR CREATING SAVINGS-
             {
                 Console.WriteLine("Enter Savings Name: ");
                 string savingsName = Console.ReadLine();
 
-                MyVaultData.SetName(savingsName);
-
                 Console.WriteLine("Enter amount to transfer: ");
                 double savingsValue = Convert.ToDouble(getEnterAction());
 
-                if(!SavingsProcess.createSavings(TransactionActions.Savings, savingsValue))
+                if (!SavingsProcess.createSavings(TransactionActions.Savings, savingsName, savingsValue))
                 {
                     Console.WriteLine("Insufficient Balance");
                 }
@@ -155,24 +153,24 @@ namespace MyVaultKeep
 
             static void transactionHistory() //UI LOGIC -METHOD FOR VIEWING TRANSACTION HISTORY-
             {
-                    Console.WriteLine("Transaction History:");
-                    Console.WriteLine("____________________________");
-                    foreach (var Viewtransactions in MyVaultData.GetTransactionList())
-                    {
+                Console.WriteLine("Transaction History:");
+                Console.WriteLine("____________________________");
+                foreach (var Viewtransactions in MyVaultData.GetTransactionList())
+                {
                     Console.WriteLine(Viewtransactions);
-                    }
-                    Console.WriteLine("----------------------------");
                 }
+                Console.WriteLine("----------------------------");
+            }
 
-                static void setExpenses() //UI LOGIC -METHOD FOR SETTING EXPENSES-
+            static void setExpenses() //UI LOGIC -METHOD FOR SETTING EXPENSES-
             {
-                    displayExpenses();
-                    MyVaultDetails.EnterExpenses = Convert.ToInt16(getEnterAction());
+                displayExpenses();
+                MyVaultDetails.EnterExpenses = Convert.ToInt16(getEnterAction());
 
-                    Console.WriteLine("Enter amount to allot: ");
-                    double expensesValue = Convert.ToDouble(getEnterAction());
+                Console.WriteLine("Enter amount to allot: ");
+                double expensesValue = Convert.ToDouble(getEnterAction());
 
-                    if (!ExpensesProcess.initializeExpenses(TransactionActions.Expenses, expensesValue))
+                if (!ExpensesProcess.initializeExpenses(TransactionActions.Expenses, expensesValue))
                 {
                     Console.WriteLine("Insufficient Balance");
 
@@ -180,25 +178,25 @@ namespace MyVaultKeep
 
                 Console.WriteLine("----------------------------");
 
-            } 
-
-               
-                static void viewSavingsAccount() //UI LOGIC -METHOD FOR VIEWING SAVINGS ACCOUNT-
-            {
-                    Console.WriteLine("Savings Accounts: ");
-                    Console.WriteLine("____________________________");
-                    foreach (string savings in MyVaultData.GetSavingsList())
-                    {
-                        Console.WriteLine(savings);
-                    }
-                    Console.WriteLine("----------------------------");
-                }
-
-
             }
 
+
+            static void viewSavingsAccount() //UI LOGIC -METHOD FOR VIEWING SAVINGS ACCOUNT-
+            {
+                Console.WriteLine("Savings Accounts: ");
+                Console.WriteLine("____________________________");
+                foreach (string savings in MyVaultData.GetSavingsList())
+                {
+                    Console.WriteLine(savings);
+                }
+                Console.WriteLine("----------------------------");
+            }
+
+
         }
+
     }
+}
 
 
 

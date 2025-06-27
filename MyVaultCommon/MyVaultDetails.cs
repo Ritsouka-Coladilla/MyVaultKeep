@@ -9,7 +9,6 @@ namespace MyVaultCommon
     public class MyVaultDetails
     {
         public static double Balance { get; set; } = 0;
-        public static string Name { get; set; }
         public static int EnterExpenses { get; set; }
     }
 }
