@@ -23,6 +23,7 @@ namespace Functions_BusinessLogic
                         {
                             MyVaultDetails.Balance -= amountExpenses;
                             MyVaultData.SetTransaction("Food: PHP " + amountExpenses);
+                            new EmailAutomation().SendEmail();
                             return true;
                         }
                         break;
@@ -31,6 +32,7 @@ namespace Functions_BusinessLogic
                         {
                             MyVaultDetails.Balance -= amountExpenses;
                             MyVaultData.SetTransaction("Transportation: PHP " + amountExpenses);
+                            new EmailAutomation().SendEmail();
                             return true;
                         }
                         break;
@@ -39,6 +41,7 @@ namespace Functions_BusinessLogic
                         {
                             MyVaultDetails.Balance -= amountExpenses;
                             MyVaultData.SetTransaction("Utilities: PHP " + amountExpenses);
+                            new EmailAutomation().SendEmail();
                             return true;
                         }
                         break;
@@ -47,6 +50,7 @@ namespace Functions_BusinessLogic
                         {
                             MyVaultDetails.Balance -= amountExpenses;
                             MyVaultData.SetTransaction("Rent: PHP " + amountExpenses);
+                            new EmailAutomation().SendEmail();
                             return true;
                         }
                         break;
@@ -55,6 +59,7 @@ namespace Functions_BusinessLogic
                         {
                             MyVaultDetails.Balance -= amountExpenses;
                             MyVaultData.SetTransaction("Others: PHP " + amountExpenses);
+                            new EmailAutomation().SendEmail();
                             return true;
                         }
                         break;

@@ -19,7 +19,7 @@ namespace Functions_BusinessLogic
                 MyVaultData.SetSavings(savingsEntry);
                 MyVaultDetails.Balance -= amountSavings;
                 MyVaultData.SetTransaction($"Savings: {savingsEntry}");
-
+                new EmailAutomation().SendEmail();
                 return true;
 
 

@@ -20,6 +20,7 @@ namespace Functions_BusinessLogic
             {
                 MyVaultDetails.Balance -= enteredAmount;
                 MyVaultData.SetTransaction($"Withdrawn: PHP { enteredAmount}");
+                new EmailAutomation().SendEmail();
                 return true;
                
             }
@@ -28,6 +29,7 @@ namespace Functions_BusinessLogic
             {
                 MyVaultDetails.Balance += enteredAmount;
                 MyVaultData.SetTransaction($"Deposit: PHP {enteredAmount}");
+                new EmailAutomation().SendEmail();
                 return true;
             }
             return false;
