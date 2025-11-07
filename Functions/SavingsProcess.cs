@@ -10,8 +10,14 @@ namespace Functions_BusinessLogic
 {
     public class SavingsProcess
     {
+        private readonly EmailAutomation _emailAutomation;  
 
-        public static bool createSavings(TransactionActions userInput, string name, double amountSavings)
+        public SavingsProcess(EmailAutomation emailAutomation)
+        {
+            _emailAutomation = emailAutomation;
+        }   
+
+        public bool createSavings(TransactionActions userInput, string name, double amountSavings)
         {
             if (userInput == TransactionActions.Savings && amountSavings <= MyVaultDetails.Balance)
             {
@@ -19,7 +25,7 @@ namespace Functions_BusinessLogic
                 MyVaultData.SetSavings(savingsEntry);
                 MyVaultDetails.Balance -= amountSavings;
                 MyVaultData.SetTransaction($"Savings: {savingsEntry}");
-                new EmailAutomation().SendEmail();
+                _emailAutomation.SendEmail();
                 return true;
 
 

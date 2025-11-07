@@ -11,16 +11,21 @@ namespace Functions_BusinessLogic
 {
     public class DepositAndWithdrawal
     {
-        
-        
-        public static bool VaultProcess(TransactionActions userInput, double enteredAmount)
+        private readonly EmailAutomation _emailAutomation;
+
+        public DepositAndWithdrawal(EmailAutomation emailAutomation)
+        {
+            _emailAutomation = emailAutomation;
+        }
+
+        public bool VaultProcess(TransactionActions userInput, double enteredAmount)
         {
             if (userInput ==  TransactionActions.Withdraw && enteredAmount <= MyVaultDetails.Balance && enteredAmount > 0) 
 
             {
                 MyVaultDetails.Balance -= enteredAmount;
                 MyVaultData.SetTransaction($"Withdrawn: PHP { enteredAmount}");
-                new EmailAutomation().SendEmail();
+                _emailAutomation.SendEmail();
                 return true;
                
             }
@@ -29,7 +34,7 @@ namespace Functions_BusinessLogic
             {
                 MyVaultDetails.Balance += enteredAmount;
                 MyVaultData.SetTransaction($"Deposit: PHP {enteredAmount}");
-                new EmailAutomation().SendEmail();
+                _emailAutomation.SendEmail();
                 return true;
             }
             return false;

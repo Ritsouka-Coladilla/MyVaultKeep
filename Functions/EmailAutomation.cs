@@ -1,22 +1,37 @@
-﻿using System;
+﻿using MailKit.Net.Smtp;
+using MailKit.Security;
+using Microsoft.Extensions.Configuration;
+using MimeKit;
+using MyVaultCommon;
+using MyVaultCommon;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MailKit.Net.Smtp;
-using MimeKit;
 
 namespace Functions_BusinessLogic
 {
-    class EmailAutomation
+    public class EmailAutomation
     {
+        private readonly SmtpSettings _smtpSettings;
+        public EmailAutomation(SmtpSettings smtpSettings)
+        {
+            _smtpSettings = smtpSettings;
+        }
         public void SendEmail()
         {
             var message = new MimeMessage();
 
 
-            message.From.Add(new MailboxAddress("MyVault", "do-not-reply@myvault.com"));
-            message.To.Add(new MailboxAddress("User", "user@rules.com"));
+            message.From.Add(new MailboxAddress(
+                _smtpSettings.FromName,
+                _smtpSettings.FromAddress
+                ));
+            message.To.Add(new MailboxAddress(
+                _smtpSettings.ToName,
+                _smtpSettings.ToAddress
+                ));
             message.Subject = "MyVault Transactions";
 
             string emailMessage = $"A transaction was made into your Vault!";
@@ -28,14 +43,14 @@ namespace Functions_BusinessLogic
 
             using (var client = new SmtpClient())
             {
-                var smtpHost = "sandbox.smtp.mailtrap.io";
-                var smtpPort = 2525;
-                var tsl = MailKit.Security.SecureSocketOptions.StartTls;
+                var smtpHost = _smtpSettings.SmtpHost;
+                var smtpPort = _smtpSettings.SmtpPort;
+                var tsl = _smtpSettings.SecureSocketOption;
 
                 client.Connect(smtpHost, smtpPort, tsl);
 
-                var username = "a7f374eb1c2906";
-                var password = "a38b501a90dbb7";
+                var username = _smtpSettings.SmtpUsername;
+                var password = _smtpSettings.SmtpPassword;
 
                 client.Authenticate(username, password);
 
