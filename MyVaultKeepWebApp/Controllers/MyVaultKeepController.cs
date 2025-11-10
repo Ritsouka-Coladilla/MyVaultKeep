@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using MyVaultCommon;
-using Functions_BusinessLogic;
 
 namespace MyVaultKeepWebApp.Controllers
 {
@@ -9,13 +8,19 @@ namespace MyVaultKeepWebApp.Controllers
     [ApiController]
     public class MyVaultKeepController : ControllerBase
     {
+        private readonly Functions_BusinessLogic.SavingsProcess _SavingsProcess;
+
+        public MyVaultKeepController(Functions_BusinessLogic.SavingsProcess savingsProcess)
+        {
+            _SavingsProcess = savingsProcess ?? throw new ArgumentNullException(nameof(savingsProcess));
+        }
 
         [HttpPatch("Withdraw")]
         public bool Withdraw(double amount)
         {
-            var userInput = TransactionActions.Withdraw;
+            var userInput = Functions_BusinessLogic.TransactionActions.Withdraw;
 
-            var result = DepositAndWithdrawal.VaultProcess(userInput, amount);
+            var result = Functions_BusinessLogic.DepositAndWithdrawal.VaultProcess(userInput, amount);
 
             return result;
         }
@@ -23,9 +28,9 @@ namespace MyVaultKeepWebApp.Controllers
         [HttpPatch("Deposit")]
         public bool Deposit(double amount)
         {
-            var userInput = TransactionActions.Deposit;
+            var userInput = Functions_BusinessLogic.TransactionActions.Deposit;
 
-            var result = DepositAndWithdrawal.VaultProcess(userInput, amount);
+            var result = Functions_BusinessLogic.DepositAndWithdrawal.VaultProcess(userInput, amount);
 
             return result;
         }
@@ -33,34 +38,36 @@ namespace MyVaultKeepWebApp.Controllers
         [HttpPost("CreateSavings")]
         public bool CreateSavings(string name, double amountSavings)
         {
-            var userInput = TransactionActions.Savings;
-            var result = SavingsProcess.createSavings(userInput, name, amountSavings);
+            var userInput = Functions_BusinessLogic.TransactionActions.Savings;
+            var result = _SavingsProcess.createSavings(userInput, name, amountSavings);
             return result;
         }
 
         [HttpDelete("DeleteSavings")]
         public bool DeleteSavings(string name, double amount)
         {
-            var userInput = TransactionActions.Savings;
-            var result = SavingsProcess.deleteSavings(userInput, name, amount);
+            var userInput = Functions_BusinessLogic.TransactionActions.Savings;
+            var result = _SavingsProcess.deleteSavings(userInput, name, amount);
             return result;
         }
 
         [HttpPut("UpdateSavings")]
         public bool UpdateSavings(string oldName, string newName, double newAmount)
         {
-            var userInput = TransactionActions.Savings;
-            var result = SavingsProcess.updateSavings(userInput, oldName, newName, newAmount);
+            var userInput = Functions_BusinessLogic.TransactionActions.Savings;
+            var result = _SavingsProcess.updateSavings(userInput, oldName, newName, newAmount);
             return result;
         }
 
         [HttpPost("Expenses")]
         public bool CreateExpenses(double amount)
         {
-            var userInput = TransactionActions.Expenses;
-            var result = ExpensesProcess.initializeExpenses(userInput, amount);
+            var userInput = Functions_BusinessLogic.TransactionActions.Expenses;
+            var result = Functions_BusinessLogic.ExpensesProcess.initializeExpenses(userInput, amount);
 
             return result;
         }
     }
 }
+
+

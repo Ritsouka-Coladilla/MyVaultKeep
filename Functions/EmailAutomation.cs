@@ -3,7 +3,6 @@ using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
 using MyVaultCommon;
-using MyVaultCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,23 +13,21 @@ namespace Functions_BusinessLogic
 {
     public class EmailAutomation
     {
-        private readonly SmtpSettings _smtpSettings;
-        public EmailAutomation(SmtpSettings smtpSettings)
+        private readonly IConfiguration _configuration;
+        public EmailAutomation(IConfiguration configuration)
         {
-            _smtpSettings = smtpSettings;
+            _configuration = configuration;
         }
         public void SendEmail()
         {
             var message = new MimeMessage();
-
-
             message.From.Add(new MailboxAddress(
-                _smtpSettings.FromName,
-                _smtpSettings.FromAddress
-                ));
+                _configuration["SmtpSettings:FromName"],
+                _configuration["SmtpSettings:FromAddress"]
+            ));
             message.To.Add(new MailboxAddress(
-                _smtpSettings.ToName,
-                _smtpSettings.ToAddress
+                _configuration["SmtpSettings:ToName"],
+                _configuration["SmtpSettings:ToAddress"]
                 ));
             message.Subject = "MyVault Transactions";
 
@@ -43,16 +40,16 @@ namespace Functions_BusinessLogic
 
             using (var client = new SmtpClient())
             {
-                var smtpHost = _smtpSettings.SmtpHost;
-                var smtpPort = _smtpSettings.SmtpPort;
-                var tsl = _smtpSettings.SecureSocketOption;
+                client.Connect(
+                   _configuration["SmtpSettings:SmtpHost"],
+                   int.Parse(_configuration["SmtpSettings:SmtpPort"]),
+                   SecureSocketOptions.StartTls
+               );
 
-                client.Connect(smtpHost, smtpPort, tsl);
-
-                var username = _smtpSettings.SmtpUsername;
-                var password = _smtpSettings.SmtpPassword;
-
-                client.Authenticate(username, password);
+                client.Authenticate(
+                    _configuration["SmtpSettings:Username"],
+                    _configuration["SmtpSettings:Password"]
+                );
 
                 client.Send(message);
                 client.Disconnect(true);

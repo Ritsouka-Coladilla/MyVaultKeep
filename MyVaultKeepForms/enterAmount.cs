@@ -19,16 +19,12 @@ namespace MyVaultKeepForms
             Withdraw
         }
         private TransactionActions mode;
-        private readonly DepositAndWithdrawal _depositAndWithdrawal;
-
-        // Updated constructor to accept EmailAutomation as a parameter
-        public enterAmount(TransactionActions actions, EmailAutomation emailAutomation)
+        public enterAmount(TransactionActions actions)
         {
             InitializeComponent();
             mode = actions;
 
-            // Pass the emailAutomation parameter to the DepositAndWithdrawal constructor
-            _depositAndWithdrawal = new DepositAndWithdrawal(emailAutomation);
+            
         }
 
         private void enterAmount_Load(object sender, EventArgs e)
@@ -40,7 +36,7 @@ namespace MyVaultKeepForms
         {
             if (double.TryParse(enteredAmount_txbx.Text, out double amount) && amount > 0)
             {
-                bool success = _depositAndWithdrawal.VaultProcess(
+                bool success = DepositAndWithdrawal.VaultProcess(
                      mode == TransactionActions.Deposit
                      ? Functions_BusinessLogic.TransactionActions.Deposit
                      : Functions_BusinessLogic.TransactionActions.Withdraw, amount);

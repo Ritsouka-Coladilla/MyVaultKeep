@@ -1,5 +1,5 @@
 using Functions_BusinessLogic;
-using MyVaultCommon;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,12 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.Configure<SmtpSettings>(
-    builder.Configuration.GetSection("SmtpSettings"));
-builder.Services.AddScoped <EmailAutomation>();
-builder.Services.AddScoped<ExpensesProcess>();
-builder.Services.AddScoped<DepositAndWithdrawal>();
-builder.Services.AddScoped<SavingsProcess>();
+builder.Services.AddScoped<EmailAutomation>();
+builder.Services.AddScoped<Functions_BusinessLogic.SavingsProcess>();
 
 var app = builder.Build();
 

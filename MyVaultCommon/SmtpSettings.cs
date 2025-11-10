@@ -15,8 +15,8 @@ namespace MyVaultCommon
         public string ToAddress { get; set; }
         public string SmtpHost { get; set; }
         public int SmtpPort { get; set; }
-        public string SmtpUsername { get; set; }
-        public string SmtpPassword { get; set; }
-        public bool SecureSocketOption { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        
     }
 }

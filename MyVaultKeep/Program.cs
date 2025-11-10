@@ -12,7 +12,7 @@ namespace MyVaultKeep
 
         static string[] transaction = new string[] { "[1] Deposit", "[2] Withdraw", "[3] Create Savings", "[4] Transaction History", "[5] Expenses", "[6] View Savings Account,", "[7] Exit" };
         static string[] expensesClassification = new string[] { "[1] Food/Groceries", "[2] Transportation", "[3] Utilities", "[4] Rent", "[5] Others" };
-
+        static Functions_BusinessLogic.SavingsProcess SavingsProcess = new Functions_BusinessLogic.SavingsProcess();
         static void Main(string[] args)
         {
 

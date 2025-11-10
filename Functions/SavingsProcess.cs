@@ -10,14 +10,14 @@ namespace Functions_BusinessLogic
 {
     public class SavingsProcess
     {
-        private readonly EmailAutomation _emailAutomation;  
+        private readonly EmailAutomation _emailAutomation;
 
-        public SavingsProcess(EmailAutomation emailAutomation)
+    public SavingsProcess (EmailAutomation emailAutomation)
         {
             _emailAutomation = emailAutomation;
-        }   
+        }
 
-        public bool createSavings(TransactionActions userInput, string name, double amountSavings)
+         public bool createSavings(TransactionActions userInput, string name, double amountSavings)
         {
             if (userInput == TransactionActions.Savings && amountSavings <= MyVaultDetails.Balance)
             {
@@ -33,7 +33,7 @@ namespace Functions_BusinessLogic
             return false;
         }
 
-        public static bool deleteSavings(TransactionActions userInput, string name, double amount)
+        public bool deleteSavings(TransactionActions userInput, string name, double amount)
         {
             if (userInput == TransactionActions.Savings && amount > 0)
             {
@@ -42,13 +42,14 @@ namespace Functions_BusinessLogic
                 {
                     MyVaultDetails.Balance += amount;
                     MyVaultData.SetTransaction($"Deleted Savings: {name} PHP: {amount}");
+                    _emailAutomation.SendEmail();
                     return true;
                 }
             }
             return false;
         }
 
-        public static bool updateSavings(TransactionActions userInput, string oldName, string newName, double newAmount)
+        public bool updateSavings(TransactionActions userInput, string oldName, string newName, double newAmount)
         {
             if (userInput == TransactionActions.Savings && newAmount > 0)
             {
@@ -56,6 +57,7 @@ namespace Functions_BusinessLogic
                 if (updated)
                 {
                     MyVaultData.SetTransaction($"Updated Savings: {oldName} → {newName}, New Amount: PHP {newAmount}");
+                    _emailAutomation.SendEmail();
                     return true;
                 }
             }
